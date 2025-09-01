@@ -13,21 +13,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['https://studentattendence23.netlify.app'];
 
 // Apply CORS middleware
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
+  origin: 'https://studentattendence23.netlify.app',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true
 }));
 
 // Preflight requests are handled by cors() automatically
