@@ -13,12 +13,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
-const allowedOrigins = ['https://ggcp-cs-department.netlify.app/'];
+const allowedOrigins = [
+  'https://ggcp-cs-department.netlify.app',
+  'https://jocular-yeot-207524.netlify.app'
+];
 
 // Apply CORS middleware
 app.use(cors({
   origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// Explicit preflight support
+app.options('*', cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
