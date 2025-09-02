@@ -13,12 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
-const allowedOrigins = ['https://studentattendence23.netlify.app'];
+const allowedOrigins = ['https://jocular-yeot-207524.netlify.app'];
 
 // Apply CORS middleware
 app.use(cors({
-  origin: 'https://studentattendence23.netlify.app',
-  methods: ['GET', 'POST', 'OPTIONS'],
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
 
@@ -37,6 +37,11 @@ app.use('/api/task', taskRoutes);
 // Basic route
 app.get('/', (req, res) => {
   res.send('API is running');
+});
+
+// Base API route health check
+app.get('/api', (req, res) => {
+  res.send('API base is running');
 });
 
 // Error handling middleware
