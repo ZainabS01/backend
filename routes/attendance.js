@@ -87,4 +87,25 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+// Delete an attendance record (admin only)
+router.delete('/:attendanceId', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Only admin can delete attendance records' });
+    }
+
+    const { attendanceId } = req.params;
+    
+    const attendance = await Attendance.findByIdAndDelete(attendanceId);
+    if (!attendance) {
+      return res.status(404).json({ message: 'Attendance record not found' });
+    }
+
+    res.json({ message: 'Attendance record deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting attendance record:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;

@@ -46,4 +46,29 @@ router.get('/all', authMiddleware, async (req, res) => {
   }
 });
 
+// Delete a task and its attendance records
+router.delete('/:taskId', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Only admin can delete tasks' });
+    }
+
+    const { taskId } = req.params;
+    
+    // Delete the task
+    const task = await Task.findByIdAndDelete(taskId);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    // Delete all attendance records associated with this task
+    await Attendance.deleteMany({ task: taskId });
+
+    res.json({ message: 'Task and associated attendance records deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting task:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
