@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
-const allowedOrigins = ['https://jocular-yeot-207524.netlify.app'];
+const allowedOrigins = ['https://ggcp-cs-department.netlify.app/'];
 
 // Apply CORS middleware
 app.use(cors({
